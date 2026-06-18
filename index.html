@@ -2,379 +2,296 @@
 <html lang="uk">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>WOW Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>WOW Studio Reel</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden}
 
 .stage{
-  position:relative;width:393px;height:852px;
-  background:#050507;overflow:hidden;
-  font-family:'Unbounded',sans-serif;
+  position:relative;
+  width:min(393px, 100vw);
+  height:min(852px, 100vh);
+  background:#050507;
+  overflow:hidden;
 }
-
-/* GRAIN */
-.stage::after{
-  content:'';position:absolute;inset:0;z-index:50;pointer-events:none;
-  opacity:.3;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
-}
-
-/* PARTICLES */
-#cvs{position:absolute;inset:0;z-index:1}
 
 /* SCENES */
-.scene{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none}
-.scene.on{opacity:1}
+.scene{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .08s}
+.scene.on{opacity:1;pointer-events:all}
 
-/* ══ S1 — ПРОВОКАЦІЯ ══ */
-#s1{flex-direction:column;text-align:center;padding:0 40px;gap:0}
-.s1-pre{font-size:11px;letter-spacing:.3em;color:rgba(236,236,244,.25);text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:32px;opacity:0}
-.s1-pre.in{animation:fadeUp .5s forwards}
-.s1-main{font-size:52px;font-weight:900;line-height:1.05;color:#ECECF4;text-transform:uppercase;opacity:0;letter-spacing:-.02em}
-.s1-main.in{animation:fadeUp .4s .2s forwards}
-.s1-cross{position:relative;display:inline-block}
-.s1-cross::after{
-  content:'';position:absolute;left:-4px;right:-4px;top:50%;height:4px;
-  background:linear-gradient(90deg,#7C5CFF,#00E5FF);
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .4s .6s ease;
+/* ─── SCENE 0: START ─── */
+#s0{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;
+  background:#050507;z-index:100;
 }
-.s1-cross.strike::after{transform:scaleX(1)}
+.start-logo{font-family:'Inter',sans-serif;font-size:44px;font-weight:900;letter-spacing:-.02em;background:linear-gradient(135deg,#7C5CFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.start-sub{font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(255,255,255,.3);letter-spacing:.1em}
+.play-btn{width:88px;height:88px;border-radius:50%;background:linear-gradient(135deg,#7C5CFF,#00E5FF);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(124,92,255,.5);transition:transform .15s}
+.play-btn:active{transform:scale(.94)}
+.play-btn svg{width:32px;height:32px;fill:#050507;margin-left:6px}
 
-/* ══ S2 — ВИБУХ ══ */
-#s2{flex-direction:column;text-align:center;gap:8px;padding:0 32px}
-.s2-word{
-  font-size:72px;font-weight:900;line-height:.95;
-  text-transform:uppercase;letter-spacing:-.03em;
-  background:linear-gradient(100deg,#7C5CFF,#00E5FF);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  opacity:0;transform:scale(1.3) translateY(20px);
-  transition:opacity .35s,transform .35s;
-}
-.s2-word.in{opacity:1;transform:scale(1) translateY(0)}
-.s2-sub{font-size:11px;letter-spacing:.25em;color:rgba(0,229,255,.5);text-transform:uppercase;font-family:'Space Mono',monospace;margin-top:20px;opacity:0;transition:opacity .4s .3s}
-.s2-sub.in{opacity:1}
-.glow-orb{
-  position:absolute;width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(124,92,255,.3) 0%,transparent 65%);
-  left:50%;top:50%;transform:translate(-50%,-50%);
-  animation:pulse-orb 2s ease-in-out infinite alternate;
-}
-@keyframes pulse-orb{from{transform:translate(-50%,-50%) scale(.9)}to{transform:translate(-50%,-50%) scale(1.1)}}
+/* ─── SCENE 1: TERMINAL ─── */
+#s1{display:flex;flex-direction:column;padding:52px 36px;justify-content:center;gap:36px}
+.term-tagline{font-family:'Inter',sans-serif;font-size:34px;font-weight:800;color:#fff;line-height:1.25}
+.term-tagline .grad{background:linear-gradient(135deg,#7C5CFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.term-window{background:#0d1117;border-radius:14px;overflow:hidden;border:1px solid rgba(124,92,255,.2)}
+.term-bar{background:#161b22;padding:12px 18px;display:flex;align-items:center;gap:8px}
+.dot{width:13px;height:13px;border-radius:50%}
+.term-name{font-family:'JetBrains Mono',monospace;font-size:13px;color:rgba(255,255,255,.25);margin-left:10px}
+.term-body{padding:24px 22px;font-family:'JetBrains Mono',monospace;font-size:20px;line-height:2;min-height:160px}
+.t-prompt{color:#39d353}
+.t-cmd{color:#58a6ff}
+.t-dim{color:rgba(255,255,255,.3)}
+.t-ok{color:#39d353}
+.cursor{display:inline-block;width:10px;height:22px;background:#fff;vertical-align:middle;margin-left:2px}
 
-/* ══ S3 — ПОСЛУГИ ══ */
-#s3{flex-direction:column;padding:48px 32px;gap:16px}
-.s3-title{font-size:11px;letter-spacing:.3em;color:rgba(0,229,255,.5);text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:8px;align-self:flex-start;opacity:0;transition:opacity .4s}
-.s3-title.in{opacity:1}
-.srv-item{
-  width:100%;padding:20px 24px;
-  border-radius:10px;background:#0b0b10;
-  border-left:2px solid transparent;
-  display:flex;align-items:center;gap:16px;
-  opacity:0;transform:translateX(-30px);
-  transition:opacity .45s,transform .45s,border-color .45s;
+/* ─── SCENE 2: SHOP ─── */
+#s2{display:flex;flex-direction:column;padding:48px 32px 40px;gap:24px}
+.shop-title{font-family:'Inter',sans-serif;font-size:32px;font-weight:800;color:#fff;line-height:1.25}
+.shop-title .grad{background:linear-gradient(135deg,#7C5CFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.products{display:flex;gap:14px;flex:1}
+.prod{flex:1;background:#0d1117;border-radius:16px;overflow:hidden;border:1px solid rgba(124,92,255,.2);display:flex;flex-direction:column;opacity:0;transform:translateY(30px);transition:opacity .4s,transform .4s}
+.prod.in{opacity:1;transform:none}
+.prod-img{height:160px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#12121f,#1a1a2e)}
+.prod-icon{width:70px;height:70px;border-radius:12px;background:linear-gradient(135deg,#7C5CFF,#00E5FF);opacity:.7}
+.prod-info{padding:14px 14px 18px}
+.prod-cat{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,.3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em}
+.prod-name{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}
+.prod-price{font-family:'Inter',sans-serif;font-size:20px;font-weight:800;background:linear-gradient(135deg,#7C5CFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.prod-btn{margin:0 12px 14px;height:40px;border-radius:10px;background:linear-gradient(135deg,#7C5CFF,#00E5FF);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:#050507}
+.notif{
+  position:absolute;left:28px;right:28px;
+  background:#12121f;border-radius:16px;
+  padding:16px 20px;display:flex;align-items:center;gap:16px;
+  opacity:0;
+  box-shadow:0 16px 48px rgba(0,0,0,.7);
 }
-.srv-item.in{opacity:1;transform:none;border-left-color:#7C5CFF}
-.srv-num{font-size:36px;font-weight:900;color:rgba(124,92,255,.2);font-family:'Space Mono',monospace;min-width:48px}
-.srv-name{font-size:15px;font-weight:700;color:#ECECF4}
-.srv-desc{font-size:10px;color:rgba(236,236,244,.35);margin-top:3px;letter-spacing:.05em}
-.srv-arrow{margin-left:auto;color:rgba(0,229,255,.4);font-size:18px}
+.notif.tg{border:1px solid rgba(42,171,238,.3)}
+.notif.cart{border:1px solid rgba(124,92,255,.3)}
+.notif-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.notif-text .n-title{font-family:'Inter',sans-serif;font-size:16px;font-weight:700;color:#fff}
+.notif-text .n-sub{font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,.4);margin-top:2px}
 
-/* ══ S4 — ЦИФРИ ══ */
-#s4{flex-direction:column;padding:48px 32px;gap:32px}
-.big-stat{text-align:center;opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s}
-.big-stat.in{opacity:1;transform:none}
-.bs-num{
-  font-size:88px;font-weight:900;line-height:1;
-  background:linear-gradient(100deg,#7C5CFF,#00E5FF);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
+/* ─── SCENE 3: CTA ─── */
+#s3{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:52px 40px;text-align:center;gap:0}
+.cta-sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(0,229,255,.5);letter-spacing:.2em;margin-bottom:28px;opacity:0;transition:opacity .5s}
+.cta-sub.in{opacity:1}
+.cta-logo{font-family:'Inter',sans-serif;font-size:108px;font-weight:900;line-height:1;letter-spacing:-.04em;background:linear-gradient(135deg,#7C5CFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:scale(.85);transition:opacity .45s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.cta-logo.in{opacity:1;transform:scale(1)}
+.cta-studio{font-family:'Inter',sans-serif;font-size:16px;letter-spacing:.4em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-top:4px;opacity:0;transition:opacity .4s .2s}
+.cta-studio.in{opacity:1}
+.cta-div{width:60px;height:2px;background:linear-gradient(90deg,#7C5CFF,#00E5FF);margin:36px auto;opacity:0;transition:opacity .4s .3s}
+.cta-div.in{opacity:1}
+.cta-claim{font-family:'Inter',sans-serif;font-size:30px;font-weight:800;color:#fff;line-height:1.3;opacity:0;transition:opacity .4s .35s}
+.cta-claim.in{opacity:1}
+.cta-services{font-family:'Inter',sans-serif;font-size:15px;color:rgba(255,255,255,.4);margin-top:10px;opacity:0;transition:opacity .4s .4s;letter-spacing:.03em}
+.cta-services.in{opacity:1}
+.cta-btn{
+  margin-top:44px;padding:20px 48px;border-radius:99px;
+  background:linear-gradient(135deg,#7C5CFF,#00E5FF);
+  font-family:'Inter',sans-serif;font-size:18px;font-weight:800;color:#050507;
+  box-shadow:0 0 80px rgba(124,92,255,.45);
+  opacity:0;transform:translateY(20px);transition:opacity .4s .55s,transform .4s .55s;
+  letter-spacing:.02em;
 }
-.bs-label{font-size:10px;letter-spacing:.25em;color:rgba(236,236,244,.4);text-transform:uppercase;margin-top:4px;font-family:'Space Mono',monospace}
-.stat-divider{width:1px;height:60px;background:linear-gradient(180deg,transparent,rgba(124,92,255,.4),transparent);align-self:center;opacity:0;transition:opacity .4s .2s}
-.stat-divider.in{opacity:1}
-.s4-row{display:flex;gap:0;width:100%}
-.bs-half{flex:1;text-align:center;opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s}
-.bs-half.in{opacity:1;transform:none}
-.bs-half .bs-num{font-size:56px}
-.sep-v{width:1px;background:linear-gradient(180deg,transparent,rgba(124,92,255,.3),transparent);margin:0 16px;opacity:0;transition:opacity .4s}
-.sep-v.in{opacity:1}
+.cta-btn.in{opacity:1;transform:none}
+.cta-handle{font-family:'JetBrains Mono',monospace;font-size:20px;color:#00E5FF;margin-top:20px;opacity:0;transition:opacity .4s .7s}
+.cta-handle.in{opacity:1}
 
-/* ══ S5 — CTA ══ */
-#s5{flex-direction:column;text-align:center;padding:48px 32px;gap:0}
-.s5-eyebrow{font-size:9px;letter-spacing:.3em;color:rgba(0,229,255,.5);text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:20px;opacity:0;transition:opacity .4s}
-.s5-eyebrow.in{opacity:1}
-.s5-logo{
-  font-size:100px;font-weight:900;line-height:.9;letter-spacing:-.03em;
-  background:linear-gradient(100deg,#7C5CFF,#00E5FF);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  opacity:0;transform:translateY(30px);
-  transition:opacity .5s .1s,transform .5s .1s;
-}
-.s5-logo.in{opacity:1;transform:none}
-.s5-tagline{font-size:13px;color:rgba(236,236,244,.5);letter-spacing:.08em;margin-top:8px;opacity:0;transition:opacity .4s .3s}
-.s5-tagline.in{opacity:1}
-.s5-cta{
-  margin-top:48px;
-  display:inline-block;padding:16px 36px;
-  background:linear-gradient(100deg,#7C5CFF,#00E5FF);
-  border-radius:99px;font-size:11px;font-weight:700;
-  letter-spacing:.15em;text-transform:uppercase;
-  color:#050507;font-family:'Space Mono',monospace;
-  opacity:0;transform:scale(.9);
-  transition:opacity .4s .5s,transform .4s .5s;
-  box-shadow:0 0 60px rgba(124,92,255,.4);
-}
-.s5-cta.in{opacity:1;transform:scale(1)}
-.s5-handle{font-size:16px;font-weight:700;color:#ECECF4;margin-top:12px;opacity:0;transition:opacity .4s .7s}
-.s5-handle.in{opacity:1}
-.ring{
-  position:absolute;border-radius:50%;
-  border:1px solid rgba(124,92,255,.15);
-  animation:expand 2.5s ease-out infinite;
-}
-@keyframes expand{0%{width:40px;height:40px;opacity:.6}100%{width:500px;height:500px;opacity:0}}
-
-/* START */
-#start{
-  position:absolute;inset:0;z-index:200;
-  background:#050507;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:28px;
-}
-.st-logo{font-size:32px;font-weight:900;background:linear-gradient(100deg,#7C5CFF,#00E5FF);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.01em}
-.st-sub{font-size:9px;letter-spacing:.3em;color:rgba(236,236,244,.25);font-family:'Space Mono',monospace}
-.st-btn{
-  width:80px;height:80px;border-radius:50%;
-  background:linear-gradient(100deg,#7C5CFF,#00E5FF);
-  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 60px rgba(124,92,255,.5);
-  transition:transform .2s;
-}
-.st-btn:hover{transform:scale(1.08)}
-.st-btn svg{width:30px;height:30px;fill:#050507;margin-left:5px}
+/* GLOW */
+.glow{position:absolute;border-radius:50%;pointer-events:none}
 
 /* PROGRESS */
-#prog{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,.04);z-index:300}
-#prog-fill{height:100%;width:0;background:linear-gradient(90deg,#7C5CFF,#00E5FF)}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+#bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:rgba(255,255,255,.06);z-index:200}
+#bar-fill{height:100%;width:0;background:linear-gradient(90deg,#7C5CFF,#00E5FF)}
 </style>
 </head>
 <body>
 <div class="stage">
-  <canvas id="cvs"></canvas>
 
-  <!-- START -->
-  <div id="start">
-    <div class="st-logo">WOW Studio</div>
-    <div class="st-sub">reel · 30 секунд</div>
-    <button class="st-btn" onclick="go()">
+  <!-- S0: Start -->
+  <div class="scene on" id="s0">
+    <div class="glow" style="width:400px;height:400px;background:radial-gradient(circle,rgba(124,92,255,.2),transparent 70%);left:50%;top:50%;transform:translate(-50%,-50%)"></div>
+    <div class="start-logo">WOW Studio</div>
+    <div class="start-sub">рекламний ріл · 15 секунд</div>
+    <button class="play-btn" onclick="startReel()" aria-label="Play">
       <svg viewBox="0 0 24 24"><polygon points="6,3 20,12 6,21"/></svg>
     </button>
-    <div class="st-sub">натисни · screen record увімкни</div>
+    <div class="start-sub">натисни → увімкни screen record</div>
   </div>
 
-  <!-- S1: Провокація -->
+  <!-- S1: Terminal -->
   <div class="scene" id="s1">
-    <div class="s1-pre" id="s1pre">більшість студій</div>
-    <div class="s1-main" id="s1main">
-      <span class="s1-cross" id="cross">РОБЛЯТЬ<br/>ШАБЛОНИ</span>
+    <div class="term-tagline">
+      Ми не робимо сайти<br/>
+      <span class="grad">на конструкторах.</span><br/>
+      Ми <span class="grad">кодимо</span><br/>бізнес-системи.
+    </div>
+    <div class="term-window">
+      <div class="term-bar">
+        <div class="dot" style="background:#ff5f57"></div>
+        <div class="dot" style="background:#febb2c"></div>
+        <div class="dot" style="background:#28c940"></div>
+        <span class="term-name">terminal</span>
+      </div>
+      <div class="term-body">
+        <div><span class="t-prompt">$ </span><span class="t-cmd" id="cmd"></span><span class="cursor" id="cur"></span></div>
+        <div class="t-dim" id="l2" style="opacity:0">Resolving modules...</div>
+        <div class="t-dim" id="l3" style="opacity:0">Building storefront...</div>
+        <div class="t-ok" id="l4" style="opacity:0">✓ Done in 3.2s — Ready!</div>
+      </div>
     </div>
   </div>
 
-  <!-- S2: Вибух -->
+  <!-- S2: Shop -->
   <div class="scene" id="s2">
-    <div class="glow-orb"></div>
-    <div class="s2-word" id="s2w1">МИ</div>
-    <div class="s2-word" id="s2w2">БУДУЄМО</div>
-    <div class="s2-word" id="s2w3">БІЗНЕС</div>
-    <div class="s2-sub" id="s2sub">// wow studio · web · video · brand</div>
+    <div class="shop-title">Твій магазин —<br/><span class="grad">готовий до продажів</span></div>
+    <div class="products">
+      <div class="prod" id="p1">
+        <div class="prod-img"><div class="prod-icon"></div></div>
+        <div class="prod-info">
+          <div class="prod-cat">Взуття</div>
+          <div class="prod-name">Air Max Pro</div>
+          <div class="prod-price">2 490 ₴</div>
+        </div>
+        <div class="prod-btn">Купити →</div>
+      </div>
+      <div class="prod" id="p2">
+        <div class="prod-img"><div class="prod-icon" style="border-radius:50%"></div></div>
+        <div class="prod-info">
+          <div class="prod-cat">Одяг</div>
+          <div class="prod-name">Худі Oversize</div>
+          <div class="prod-price">1 290 ₴</div>
+        </div>
+        <div class="prod-btn">Купити →</div>
+      </div>
+      <div class="prod" id="p3">
+        <div class="prod-img"><div class="prod-icon" style="border-radius:99px;width:80px;height:40px"></div></div>
+        <div class="prod-info">
+          <div class="prod-cat">Сумки</div>
+          <div class="prod-name">Urban Pack</div>
+          <div class="prod-price">890 ₴</div>
+        </div>
+        <div class="prod-btn">Купити →</div>
+      </div>
+    </div>
+    <!-- Notifications -->
+    <div class="notif cart" id="notif-cart" style="top:64px">
+      <div class="notif-icon" style="background:linear-gradient(135deg,#7C5CFF,#00E5FF)">🛒</div>
+      <div class="notif-text">
+        <div class="n-title">Додано до кошика</div>
+        <div class="n-sub">Air Max Pro · 2 490 ₴</div>
+      </div>
+    </div>
+    <div class="notif tg" id="notif-tg" style="top:64px">
+      <div class="notif-icon" style="background:linear-gradient(135deg,#2AABEE,#1488cc)">✈️</div>
+      <div class="notif-text">
+        <div class="n-title" style="color:#2AABEE">Telegram · Нове замовлення</div>
+        <div class="n-sub">Air Max Pro · Оплата ✅</div>
+      </div>
+    </div>
   </div>
 
-  <!-- S3: Послуги -->
+  <!-- S3: CTA -->
   <div class="scene" id="s3">
-    <div class="s3-title" id="s3t">що ми робимо</div>
-    <div class="srv-item" id="srv1">
-      <div class="srv-num">01</div>
-      <div>
-        <div class="srv-name">Лендінг / Сайт</div>
-        <div class="srv-desc">конверсія · дизайн · швидкість</div>
-      </div>
-      <div class="srv-arrow">→</div>
-    </div>
-    <div class="srv-item" id="srv2">
-      <div class="srv-num">02</div>
-      <div>
-        <div class="srv-name">Відео продакшн</div>
-        <div class="srv-desc">reels · promo · motion design</div>
-      </div>
-      <div class="srv-arrow">→</div>
-    </div>
-    <div class="srv-item" id="srv3">
-      <div class="srv-num">03</div>
-      <div>
-        <div class="srv-name">Брендинг</div>
-        <div class="srv-desc">logo · identity · соц мережі</div>
-      </div>
-      <div class="srv-arrow">→</div>
-    </div>
+    <div class="glow" style="width:500px;height:500px;background:radial-gradient(circle,rgba(124,92,255,.18),transparent 65%);left:50%;top:50%;transform:translate(-50%,-50%)"></div>
+    <div class="cta-sub" id="c-sub">твій бізнес · твої правила</div>
+    <div class="cta-logo" id="c-logo">WOW</div>
+    <div class="cta-studio" id="c-studio">Studio</div>
+    <div class="cta-div" id="c-div"></div>
+    <div class="cta-claim" id="c-claim">Твій бізнес заслуговує<br/>на краще.</div>
+    <div class="cta-services" id="c-srv">Лендінг · Магазин · Автоматизація</div>
+    <div class="cta-btn" id="c-btn">Замов під ключ →</div>
+    <div class="cta-handle" id="c-hdl">@wowznahidka</div>
   </div>
 
-  <!-- S4: Цифри -->
-  <div class="scene" id="s4">
-    <div class="big-stat" id="bs1">
-      <div class="bs-num" id="cnt1">0</div>
-      <div class="bs-label">проектів здано</div>
-    </div>
-    <div class="stat-divider" id="sdiv"></div>
-    <div class="s4-row">
-      <div class="bs-half" id="bs2">
-        <div class="bs-num" id="cnt2">0</div>
-        <div class="bs-label">днів під ключ</div>
-      </div>
-      <div class="sep-v" id="sv"></div>
-      <div class="bs-half" id="bs3">
-        <div class="bs-num" id="cnt3">0×</div>
-        <div class="bs-label">середній ROI</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- S5: CTA -->
-  <div class="scene" id="s5">
-    <div class="ring" style="animation-delay:0s"></div>
-    <div class="ring" style="animation-delay:.8s"></div>
-    <div class="ring" style="animation-delay:1.6s"></div>
-    <div class="s5-eyebrow" id="s5ey">твоя черга</div>
-    <div class="s5-logo" id="s5logo">WOW</div>
-    <div class="s5-tagline" id="s5tag">studio · ternopil · 2024</div>
-    <div class="s5-cta" id="s5cta">безкоштовний аудит</div>
-    <div class="s5-handle" id="s5h">@wowznahidka</div>
-  </div>
-
-  <div id="prog"><div id="prog-fill"></div></div>
+  <div id="bar"><div id="bar-fill"></div></div>
 </div>
 
 <script>
-// Particles
-const cv = document.getElementById('cvs');
-cv.width=393; cv.height=852;
-const cx = cv.getContext('2d');
-const pts = Array.from({length:60},()=>({
-  x:Math.random()*393, y:Math.random()*852,
-  vx:(Math.random()-.5)*.4, vy:(Math.random()-.5)*.4,
-  r:Math.random()*1.5+.3,
-  a:Math.random()
-}));
-function drawPts(){
-  cx.clearRect(0,0,393,852);
-  pts.forEach(p=>{
-    p.x+=p.vx; p.y+=p.vy;
-    if(p.x<0||p.x>393)p.vx*=-1;
-    if(p.y<0||p.y>852)p.vy*=-1;
-    cx.beginPath();
-    cx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    cx.fillStyle=`rgba(124,92,255,${p.a*.4})`;
-    cx.fill();
-  });
-  // lines
-  for(let i=0;i<pts.length;i++){
-    for(let j=i+1;j<pts.length;j++){
-      const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);
-      if(d<80){
-        cx.beginPath();
-        cx.strokeStyle=`rgba(124,92,255,${(1-d/80)*.08})`;
-        cx.lineWidth=.5;
-        cx.moveTo(pts[i].x,pts[i].y);
-        cx.lineTo(pts[j].x,pts[j].y);
-        cx.stroke();
-      }
-    }
-  }
-  requestAnimationFrame(drawPts);
-}
-drawPts();
+const TOTAL = 15000;
+const CMD = 'npx build-store --client=new_business';
+let t0 = null, raf = null;
+const done = {};
+const once = (k, fn) => { if (!done[k]) { done[k] = true; fn(); } };
 
-// Counter
-function cnt(el,to,dur,sfx=''){
-  const t0=performance.now();
-  function f(t){
-    const p=Math.min((t-t0)/dur,1);
-    const ease=1-Math.pow(1-p,3);
-    el.textContent=Math.round(ease*to)+sfx;
-    if(p<1)requestAnimationFrame(f);
-  }
-  requestAnimationFrame(f);
-}
-
-function add(id,...cls){document.getElementById(id).classList.add(...cls)}
-function scene(id){
-  ['s1','s2','s3','s4','s5'].forEach(s=>document.getElementById(s).classList.remove('on'));
+function show(id) {
+  ['s0','s1','s2','s3'].forEach(s => document.getElementById(s).classList.remove('on'));
   document.getElementById(id).classList.add('on');
 }
 
-const TOTAL=30000;
-let t0=null;
-
-function go(){
-  document.getElementById('start').style.display='none';
-  t0=performance.now();
-  requestAnimationFrame(tick);
+function notifIn(el, topFrom, topTo) {
+  el.style.cssText += `;top:${topFrom}px;opacity:0;transition:top .35s cubic-bezier(.2,.8,.2,1),opacity .25s`;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    el.style.top = topTo + 'px';
+    el.style.opacity = '1';
+  }));
+}
+function notifOut(el) {
+  el.style.opacity = '0';
+  el.style.top = (parseFloat(el.style.top) - 40) + 'px';
 }
 
-const done={};
-function once(key,fn){if(!done[key]){done[key]=true;fn()}}
+function startReel() {
+  show('s1');
+  t0 = performance.now();
+  raf = requestAnimationFrame(tick);
+}
 
-function tick(now){
-  const e=now-t0;
-  document.getElementById('prog-fill').style.width=(Math.min(e/TOTAL,1)*100)+'%';
+// Terminal typing
+let cmdIdx = 0;
+function typeCmd() {
+  const el = document.getElementById('cmd');
+  const cur = document.getElementById('cur');
+  if (cmdIdx <= CMD.length) {
+    el.textContent = CMD.slice(0, cmdIdx++);
+    if (cmdIdx <= CMD.length) setTimeout(typeCmd, 45);
+    else cur.style.display = 'none';
+  }
+}
 
-  // S1: 0–5s
-  if(e<5000){
-    scene('s1');
-    if(e>200) once('s1pre',()=>add('s1pre','in'));
-    if(e>900) once('s1main',()=>add('s1main','in'));
-    if(e>2200) once('cross',()=>add('cross','strike'));
+function tick(now) {
+  const e = now - t0;
+  document.getElementById('bar-fill').style.width = (Math.min(e / TOTAL, 1) * 100) + '%';
+
+  // S1: 0-5s
+  if (e < 5000) {
+    once('s1', () => { show('s1'); setTimeout(typeCmd, 300); });
+    if (e > 2200) once('l2', () => fadeEl('l2'));
+    if (e > 3000) once('l3', () => fadeEl('l3'));
+    if (e > 3800) once('l4', () => fadeEl('l4'));
   }
-  // S2: 5–11s
-  else if(e<11000){
-    scene('s2');
-    once('s2w1',()=>{setTimeout(()=>add('s2w1','in'),100);setTimeout(()=>add('s2w2','in'),350);setTimeout(()=>add('s2w3','in'),600);setTimeout(()=>add('s2sub','in'),1000)});
+  // S2: 5-10s
+  else if (e < 10000) {
+    once('s2', () => {
+      show('s2');
+      setTimeout(() => document.getElementById('p1').classList.add('in'), 50);
+      setTimeout(() => document.getElementById('p2').classList.add('in'), 200);
+      setTimeout(() => document.getElementById('p3').classList.add('in'), 350);
+    });
+    if (e > 6500) once('nc', () => notifIn(document.getElementById('notif-cart'), 20, 64));
+    if (e > 7800) once('nc-out', () => notifOut(document.getElementById('notif-cart')));
+    if (e > 8000) once('nt', () => notifIn(document.getElementById('notif-tg'), 20, 64));
+    if (e > 9500) once('nt-out', () => notifOut(document.getElementById('notif-tg')));
   }
-  // S3: 11–19s
-  else if(e<19000){
-    scene('s3');
-    once('s3t',()=>add('s3t','in'));
-    if(e>11500) once('srv1',()=>add('srv1','in'));
-    if(e>13000) once('srv2',()=>add('srv2','in'));
-    if(e>14500) once('srv3',()=>add('srv3','in'));
-  }
-  // S4: 19–26s
-  else if(e<26000){
-    scene('s4');
-    once('bs1',()=>{
-      add('bs1','in');
-      cnt(document.getElementById('cnt1'),47,1200);
-      setTimeout(()=>add('sdiv','in'),400);
-      setTimeout(()=>{add('bs2','in');cnt(document.getElementById('cnt2'),7,800)},700);
-      setTimeout(()=>add('sv','in'),900);
-      setTimeout(()=>{add('bs3','in');cnt(document.getElementById('cnt3'),4,800,'×')},1100);
+  // S3: 10-15s
+  else {
+    once('s3', () => {
+      show('s3');
+      ['c-sub','c-logo','c-studio','c-div','c-claim','c-srv','c-btn','c-hdl']
+        .forEach(id => setTimeout(() => document.getElementById(id).classList.add('in'), 80));
     });
   }
-  // S5: 26–30s
-  else{
-    scene('s5');
-    once('s5go',()=>{
-      add('s5ey','in');
-      setTimeout(()=>add('s5logo','in'),200);
-      setTimeout(()=>add('s5tag','in'),500);
-      setTimeout(()=>add('s5cta','in'),700);
-      setTimeout(()=>add('s5h','in'),1000);
-    });
-  }
 
-  if(e<TOTAL)requestAnimationFrame(tick);
+  if (e < TOTAL) raf = requestAnimationFrame(tick);
+}
+
+function fadeEl(id) {
+  const el = document.getElementById(id);
+  el.style.transition = 'opacity .4s';
+  el.style.opacity = '1';
 }
 </script>
 </body>
